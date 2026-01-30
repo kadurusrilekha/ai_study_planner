@@ -3,6 +3,8 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 require("dotenv").config();
 
+console.log("mongo_url",process.env.MONGO_URL)
+
 const app = express();
 
 // Middleware
@@ -16,12 +18,20 @@ app.use("/api/tasks", require("./routes/taskRoutes"));
 app.use("/api/progress", require("./routes/progressRoutes"));
 app.use("/api/schedule", require("./routes/scheduleRoutes"));
 
-// MongoDB Connection
-mongoose.connect(process.env.MONGO_URL)
-  .then(() => console.log("MongoDB connected"))
-  .catch(err => console.log(err));
+// MongoDB Connection with retry logic
+const connectDB = async () => {
+  try {
+    await mongoose.connect(process.env.MONGO_URL);
+    console.log("MongoDB connected successfully");
+    
+    // Start server only after DB connects
+    app.listen(5000, () => {
+      console.log("Server running on port 5000");
+    });
+  } catch (err) {
+    console.error("MongoDB connection failed:", err.message);
+   
+  }
+};
 
-// Server
-app.listen(5000, () => {
-  console.log("Server running on port 5000");
-});
+connectDB();

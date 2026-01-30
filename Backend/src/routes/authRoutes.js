@@ -18,12 +18,13 @@ router.post("/register", async (req, res) => {
       return res.status(400).json({ error: "User already exists" });
     }
 
-    // Save user (in production, hash password with bcrypt)
+    // Save user
     const user = new User({ name, email, password });
     await user.save();
 
     res.json({ success: true, message: "User registered successfully" });
   } catch (error) {
+    console.error("Register error:", error);
     res.status(500).json({ error: error.message });
   }
 });
@@ -43,7 +44,7 @@ router.post("/login", async (req, res) => {
       return res.status(401).json({ success: false, error: "Invalid email or password" });
     }
 
-    // Create token with userId
+    // Create token
     const token = jwt.sign(
       { userId: user._id, email: user.email, name: user.name },
       process.env.JWT_SECRET || "secret_key",
@@ -56,6 +57,7 @@ router.post("/login", async (req, res) => {
       user: { id: user._id, name: user.name, email: user.email }
     });
   } catch (error) {
+    console.error("Login error:", error);
     res.status(500).json({ error: error.message });
   }
 });
