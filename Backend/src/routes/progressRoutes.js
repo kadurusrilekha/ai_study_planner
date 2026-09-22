@@ -30,7 +30,14 @@ router.get("/", async (req, res) => {
 // Update progress
 router.put("/:id", async (req, res) => {
   try {
-    const progress = await Progress.findByIdAndUpdate(req.params.id, req.body, { new: true }).populate("subject");
+    const progress = await Progress.findOneAndUpdate(
+      { _id: req.params.id, user: req.userId },
+      { $set: req.body },
+      { new: true, runValidators: true }
+    ).populate("subject");
+    if (!progress) {
+      return res.status(404).json({ error: "Progress record not found" });
+    }
     res.json(progress);
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -40,7 +47,10 @@ router.put("/:id", async (req, res) => {
 // Delete progress
 router.delete("/:id", async (req, res) => {
   try {
-    await Progress.findByIdAndDelete(req.params.id);
+    const result = await Progress.findOneAndDelete({ _id: req.params.id, user: req.userId });
+    if (!result) {
+      return res.status(404).json({ error: "Progress record not found" });
+    }
     res.json({ message: "Progress deleted" });
   } catch (error) {
     res.status(400).json({ error: error.message });

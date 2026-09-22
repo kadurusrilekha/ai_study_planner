@@ -1,2 +1,147 @@
-
 @import "tailwindcss";
+
+@layer base {
+  :root {
+    --bg-main: #FAF8F3;
+    --bg-sidebar: #CCD5AE;
+    --bg-card: #FFFFFF;
+    --bg-card-secondary: #F0F3E7;
+    --border-subtle: #E8E5DE;
+    --text-main: #2F3542;
+    --text-secondary: #667085;
+    --text-muted: #98A0A8;
+    
+    --primary-rose: #E4ACB2;
+    --primary-rose-hover: #D69AA2;
+    --primary-rose-light: #F7E8EA;
+
+    --secondary-sage: #CCD5AE;
+    --secondary-sage-hover: #B9C89A;
+    --secondary-sage-light: #F0F3E7;
+
+    --soft-success: #AFC7A1;
+    --soft-warning: #E7D59A;
+    --soft-error: #D99A9A;
+    --soft-info: #C8D8E8;
+  }
+
+  body {
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background-color: var(--bg-main);
+    color: var(--text-main);
+  }
+  
+  h1, h2, h3, h4, h5, h6, .font-heading {
+    font-family: 'Outfit', sans-serif;
+  }
+}
+
+/* Custom Soft Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(152, 160, 168, 0.3);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(152, 160, 168, 0.5);
+}
+
+/* Base Card Styling */
+.card-base {
+  background-color: #FFFFFF;
+  border: 1px solid #E8E5DE;
+  border-radius: 1.25rem;
+  box-shadow: 0 2px 12px -2px rgba(47, 53, 66, 0.04), 0 1px 4px -1px rgba(47, 53, 66, 0.02);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px -4px rgba(228, 172, 178, 0.2), 0 2px 6px -1px rgba(47, 53, 66, 0.04);
+}
+
+/* Primary Button Styling - Pastel Rose */
+.btn-primary {
+  background-color: #E4ACB2;
+  color: #2F3542;
+  font-weight: 700;
+  border-radius: 0.875rem;
+  padding: 0.625rem 1.25rem;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px -1px rgba(228, 172, 178, 0.4);
+}
+
+.btn-primary:hover {
+  background-color: #D69AA2;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px -1px rgba(228, 172, 178, 0.5);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+/* Secondary Button Styling - Pastel Sage */
+.btn-secondary {
+  background-color: #CCD5AE;
+  color: #2F3542;
+  font-weight: 700;
+  border-radius: 0.875rem;
+  padding: 0.625rem 1.25rem;
+  transition: all 0.2s ease;
+}
+
+.btn-secondary:hover {
+  background-color: #B9C89A;
+}
+
+/* Glassmorphism utility classes */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(229, 231, 235, 0.8);
+}
+
+/* Shimmer / Skeleton Animation */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.skeleton {
+  background: linear-gradient(90deg, #F0F3E7 25%, #FAF8F3 37%, #F0F3E7 63%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+/* 3D Flashcard Flip utilities */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.transform-style-3d {
+  transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.rotate-y-180 {
+  transform: rotateY(180deg);
+}
